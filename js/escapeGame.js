@@ -2,29 +2,29 @@ var score=0;
 var player;
 var barriers;
 var enemies;
+var start=false;
 
 function putText(){
-  fill(255,40,79);
+  fill(255,90,0);
   text("Score: "+score,500,40);
   textSize(30);
-  fill(200,40,79);
+  fill(255);
   text('EVADE THE CHASER',150,40);
-  fill(32,140,212);
   textSize(15);
-  text('Try to reach blue',150,120);
-  text('Avoid the',350,120);
+  text('Try to reach this box',110,120);
+  text('Avoid the',420,120);
   fill(255,255,0);
-  text('chasers',420,120);
-  textSize(10);
+  text('chasers',490,120);
+  textSize(15);
   fill(255,255,255);
   text('W',400,720);
   text('A',378,749);
   text('D',430,750);
-  text("Movement",385,765);
+  text("Movement",378,768);
 }
 
 function setup(){
-  createCanvas(600,800);
+  game=createCanvas(600,800);
   barriers=new Group();
   enemies=new Group();
   player=createSprite(520,740,20,20);
@@ -34,6 +34,13 @@ function setup(){
   for(var ctr=0;ctr<2;ctr++){
     for (var i=0; i<37; i++) {
       barriers.add(createSprite(10+ctr*580,60+i*20,20,20));
+      var randomclose=int(random(0, 100));
+      if (randomclose>90) {
+        barriers.add(createSprite(30+ctr*540,60+i*20,20,20));
+      }
+      if (i<4 && ctr==0) {
+        barriers.add(createSprite(310,60+i*20,20,20));
+      }
     }
   }
   for (var i = 0; i < 28; i++) {
@@ -44,14 +51,14 @@ function setup(){
   var k;
   for(var mtr=0;mtr<15;mtr++){
     var ctr=0;
-    length=int(random(12, 23));
+    length=int(random(12, 18));
     if (yPosition<34) {
       yPosition=yPosition+int(random(2, 3));
     }
     k=int(random(0,30-length));
     for (; ctr<length; k++) {
       var gapProb=int(random(0,100));
-      if(gapProb<80){
+      if(gapProb<70){
         barriers.add(createSprite(30+k*20,yPosition*20,20,20));
       }
       ctr++;
@@ -63,10 +70,10 @@ function setup(){
 function draw(){
   background(0);
   putText();
-  fill(200,40,79);
-  ellipse(520, 740, 80, 60);
-  fill(25, 77, 209);
-  ellipse(70, 110, 80, 60);
+  fill(255, 87, 51 );
+  rect(490, 710, 60, 60);
+  fill(218, 247, 166);
+  rect(40, 90, 60, 60);
   drawSprites();
   if (keyWentDown) {
     move();
